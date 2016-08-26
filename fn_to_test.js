@@ -28,3 +28,46 @@ function vosAjax(u,c){
         }
     };
 }
+
+/* paste raw html with script tags to be working START */
+// Evalulates a script in a global context
+function globalEval( data ) {
+	var rnotwhite = /\S/; // Check if a string has a non-whitespace character in it
+	if ( data && rnotwhite.test(data) ) {
+		var head = document.getElementsByTagName("head")[0] || document.documentElement,
+		script = document.createElement("script");
+		script.type = "text/javascript";
+		if ( jQuery.support.scriptEval ) {
+			script.appendChild( document.createTextNode( data ) );
+		} else {
+			script.text = data;
+		}
+		// Use insertBefore instead of appendChild to circumvent an IE6 bug.
+		head.insertBefore( script, head.firstChild );
+		head.removeChild( script );
+	}
+}
+function createHTML(html,context) {
+	if(typeof(context)=="undefined"){context=document;}
+	var container = context.createElement('div');
+	var secondContainer=context.createElement('div');;
+		secondContainer.innerHTML = html;
+		container.appendChild(secondContainer);
+	// return second container with all contents
+	return container.firstChild;
+}
+function pasteRichmedia(richmedia,context){
+	if(typeof(context)=="undefined"){context=document;}
+	var domiseRichmedia=createHTML(richmedia,context);
+	var scriptsToExecute=domiseRichmedia.getElementsByTagName('script');
+	console.log('scriptsToExecute',scriptsToExecute);
+	for(var i in scriptsToExecute){
+		var s=scriptsToExecute[i];
+		globalEval( s.text || s.textContent || s.innerHTML || "" )
+		//TODO if tag has src url - evaluate through request
+	}
+	context.body.appendChild(domiseRichmedia);
+  
+}
+pasteRichmedia('<script type="text/javascript">console.log(\'lolol\');</script><script type="text/javascript">console.log(\'lolol2\');</script>');
+/* paste raw html with script tags to be working END */
