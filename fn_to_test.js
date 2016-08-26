@@ -63,8 +63,11 @@ function pasteRichmedia(richmedia,context){
 	console.log('scriptsToExecute',scriptsToExecute);
 	for(var i in scriptsToExecute){
 		var s=scriptsToExecute[i];
-		globalEval( s.text || s.textContent || s.innerHTML || "" )
-		//TODO if tag has src url - evaluate through request
+		if ( s.src ) {
+			//TODO if tag has src url - evaluate through request (cors)	
+		}else{
+			globalEval( s.text || s.textContent || s.innerHTML || "" )
+		}
 	}
 	context.body.appendChild(domiseRichmedia);
   
