@@ -37,6 +37,41 @@ function globalEval( data ) {
 		var head = document.getElementsByTagName("head")[0] || document.documentElement,
 		script = document.createElement("script");
 		script.type = "text/javascript";
+		/*
+		id = "script" + (new Date).getTime();
+03
+	    script.type = "text/javascript";
+04
+	    try {
+05
+	        script.appendChild( document.createTextNode( "window." + id + "=1;" ) );
+06
+	    } catch(e){}
+07
+	 
+08
+	    root.insertBefore( script, root.firstChild );
+09
+	     
+10
+	    // Make sure that the execution of code works by injecting a script
+11
+	    // tag with appendChild/createTextNode
+12
+	    // (IE doesn't support this, fails, and uses .text instead)
+13
+	    if ( window[ id ] ) {
+14
+	        jQuery.support.scriptEval = true;
+15
+	        delete window[ id ];
+16
+	    }
+17
+	 
+18
+	    root.removeChild( script );
+		*/
 		if ( jQuery.support.scriptEval ) {
 			script.appendChild( document.createTextNode( data ) );
 		} else {
