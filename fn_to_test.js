@@ -111,15 +111,16 @@ pasteRichmedia('<script type="text/javascript">console.log(\'lolol\');</script><
 /* paste raw html with script tags to be working END */
 
 /***/
-function parseSomeListOnThePage(){
-	var plItm =$('#sidebar .playlist ol li');
+var plItm =$('#sidebar .playlist ol li');
 var arr=[];
 plItm.each(function(){
   arr.push({
     artist:$(this).attr('singer'),
     track:$(this).attr('song'),
     bitrate:$(this).attr('rate'),
-    size:$(this).attr('size')
+    size:$(this).attr('size'),
+    duration:$(this).attr('duration'),
+    download:'pleer.net/en/download/page/'+$(this).attr('link')+'#'
   });
 });
 var txt=document.createElement('textarea');
@@ -128,5 +129,3 @@ txt.style.height="400px";
 txt.value=JSON.stringify(arr);
 document.body.appendChild(txt);
 console.log(plItm,arr);
-	
-}
